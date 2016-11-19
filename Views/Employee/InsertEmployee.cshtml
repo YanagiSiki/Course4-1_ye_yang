@@ -1,0 +1,121 @@
+﻿@model Course4_1_ye_yang.Models.Employee
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<script src="~/Scripts/InsertEmployee.js"></script>
+<h2>新增員工</h2>
+
+@using (Html.BeginForm("InsertEmployee", "Employee", FormMethod.Post, new { id = "Form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <table class="table table-bordered">
+        <tr>
+            <td><lebel class="sign">*</lebel>姓名(First Name)</td>
+            <td colspan="3">
+                @Html.EditorFor(model => model.FirstName)
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </td>
+        </tr>
+        <tr>
+            <td><lebel class="sign">*</lebel>姓名(Last Name)</td>
+            <td colspan="3">
+                @Html.EditorFor(model => model.LastName)
+                @Html.ValidationMessageFor(model => model.LastName)
+            </td>
+        </tr>
+        <tr>
+            <td><lebel class="sign">*</lebel>職稱</td>
+            <td colspan="3">
+                @Html.DropDownListFor(model => model.Title, (List<SelectListItem>)ViewBag.Type, String.Empty, new { id = "SelectTitle" })                
+                @Html.ValidationMessageFor(model => model.Title)
+            </td>
+        </tr>
+        <tr>
+            <td><lebel class="sign">*</lebel>稱謂</td>
+            <td colspan="3">
+                @Html.EditorFor(model => model.TitleOfCourtesy)
+                @Html.ValidationMessageFor(model => model.TitleOfCourtesy)
+            </td>
+        </tr>
+        <tr>
+            <td><lebel class="sign">*</lebel>任職日期</td>
+            <td colspan="3">
+                <input id="HireDate" type="date" name="HireDate" />
+                @Html.ValidationMessageFor(model => model.HireDate)
+            </td>
+        </tr>
+        <tr>
+            <td><lebel class="sign">*</lebel>生日</td>
+            <td colspan="3">
+                <input id="BirthDate" type="date" name="BirthDate" />
+                @Html.ValidationMessageFor(model => model.BirthDate)
+            </td>
+        </tr>
+        <tr>
+            <td><lebel class="sign">*</lebel>國家</td>
+            <td colspan="3">
+                @Html.DropDownListFor(model => model.Country, (List<SelectListItem>)ViewBag.Country, String.Empty, new { id = "SelectCountry" })                
+                @Html.ValidationMessageFor(model => model.Country)
+            </td>
+        </tr>
+        <tr>
+            <td><lebel class="sign">*</lebel>城市</td>
+            <td colspan="3">
+                @Html.DropDownListFor(model => model.City, (List<SelectListItem>)ViewBag.City, String.Empty, new { id = "SelectCity" })                
+                @Html.ValidationMessageFor(model => model.City)
+            </td>
+        </tr>
+        <tr>
+            <td><lebel class="sign">*</lebel>地址</td>
+            <td colspan="3">
+                @Html.EditorFor(model => model.Address)
+                @Html.ValidationMessageFor(model => model.Address)
+            </td>
+        </tr>
+        <tr>
+            <td><lebel class="sign">*</lebel>電話</td>
+            <td colspan="3">
+                @Html.EditorFor(model => model.Phone)
+                @Html.ValidationMessageFor(model => model.Phone)
+            </td>
+        </tr>
+        <tr>
+            <td>性別</td>
+            <td colspan="3">
+                @Html.DropDownListFor(model => model.Gender, (List<SelectListItem>)ViewBag.Gender, String.Empty, new { id = "SelectGender" })                
+                @Html.ValidationMessageFor(model => model.Gender)
+            </td>
+        </tr>
+        <tr>
+            <td>直屬主管</td>
+            <td colspan="3">
+                @Html.DropDownListFor(model => model.ManagerID, (List<SelectListItem>)ViewBag.ManagerID, String.Empty, new { id = "SelectManagerID" })                
+                @Html.ValidationMessageFor(model => model.ManagerID)
+            </td>
+        </tr>
+        <tr>
+            <td>月薪</td>
+            <td colspan="3">    
+                @Html.TextBoxFor(model => model.MonthlyPayment, new { @class = "digit" })
+                @Html.ValidationMessageFor(model => model.MonthlyPayment)
+            </td>
+        </tr>
+        <tr>
+            <td>年薪</td>
+            <td colspan="3">
+                @Html.TextBoxFor(model => model.YearlyPayment, new { @readonly = "readonly", @class = "digit" })
+                @Html.ValidationMessageFor(model => model.YearlyPayment)
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="存檔" />
+                <input type="button" id="backbtn" value="回上一頁" >
+            </td>
+        </tr>
+
+    </table>
+}

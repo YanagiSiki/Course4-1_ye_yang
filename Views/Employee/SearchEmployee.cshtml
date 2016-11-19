@@ -1,0 +1,90 @@
+﻿@model Course4_1_ye_yang.Models.EmployeeSearchArg
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<script src="~/Scripts/SearchEmployee.js"></script>
+<h2>查詢</h2>
+@using (Html.BeginForm("SearchEmployee", "Employee", FormMethod.Post, new { id = "Form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <table class="table table-bordered">
+        <tr>
+            <td>員工編號</td>
+            <td colspan="3">
+                @Html.EditorFor(model => model.EmployeeId)
+            </td>
+        </tr>
+        <tr>
+            <td>員工姓名</td>
+            <td colspan="3">
+                @Html.EditorFor(model => model.EmployeeName)
+            </td>
+        </tr>
+        <tr>
+            <td>職稱</td>
+            <td colspan="3">
+                @Html.DropDownListFor(model => model.Title, (List<SelectListItem>)ViewBag.Type, String.Empty, new { id = "SelectTitle" })
+                
+            </td>
+        </tr>
+        <tr>
+            <td>任職日期</td>
+            <td>
+                @*@Html.EditorFor(model => model.StartHireDate) ~ @Html.EditorFor(model => model.EndHireDate)*@
+                <input id="StartHireDate" type="date" name="StartHireDate"  /> ~ 
+                <input id="EndHireDate" type="date" name="EndHireDate"  /> 
+                @Html.ValidationMessageFor(model => model.StartHireDate)
+                
+            </td>
+        </tr>
+        <tr>
+            <td> </td>
+            <td colspan="3">
+                <input type="submit" value="查詢" />
+                <input type="button" id="clearbtn" value="清除">
+                <input type="button" id="newbtn" value="新增員工">
+            </td>
+        </tr>
+
+    </table>    
+}
+
+
+<div id="SearchResultSection">
+    <div id="grid"></div>
+    @if (ViewBag.EmployeeSearchResult != null)
+    {
+        
+        <table class="table table-bordered table-striped">
+            <tr>
+                <td>員工編號</td>
+                <td>員工姓名</td>
+                <td>職稱</td>
+                <td>任職日期</td>
+                <td>性別</td>
+                <td>年齡</td>
+                <td></td> 
+                <td></td>                 
+            </tr>
+            @foreach (var item in (List<Course4_1_ye_yang.Models.EmployeeSearchResult>)ViewBag.EmployeeSearchResult)
+            {
+                
+                <tr id='@item.EmployeeId'>
+                    <td>@item.EmployeeId</td>
+                    <td>@item.EmployeeName</td>
+                    <td>@item.CodeType</td>
+                    <td>@item.HireDate</td>
+                    <td>@item.Gender</td>
+                    <td>@item.Age</td>
+                    <td>@Html.ActionLink("修改資料", "UpdateEmployee", "Employee", new { id = item.EmployeeId }, null)</td>
+                    <td>
+                        <a class="btnDelete" href="#">刪除</a>                        
+                        <input class="hidOrderId" type="hidden" value='@item.EmployeeId' />
+                    </td>
+                </tr>
+            }
+        </table>
+    }
+</div>
